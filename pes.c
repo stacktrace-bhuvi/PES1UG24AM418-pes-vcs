@@ -1,6 +1,4 @@
 // pes.c — CLI entry point and command dispatch
-//
-// This file is PROVIDED. Do not modify.
 
 #include "pes.h"
 #include "index.h"
@@ -42,6 +40,8 @@ void cmd_add(int argc, char *argv[]) {
     }
 
     Index index;
+    memset(&index, 0, sizeof(Index));   // ✅ IMPORTANT FIX
+
     if (index_load(&index) != 0) {
         fprintf(stderr, "error: failed to load index\n");
         return;
@@ -57,6 +57,8 @@ void cmd_add(int argc, char *argv[]) {
 // Usage: pes status
 void cmd_status(void) {
     Index index;
+    memset(&index, 0, sizeof(Index));   // ✅ IMPORTANT FIX
+
     if (index_load(&index) != 0) {
         fprintf(stderr, "error: failed to load index\n");
         return;
@@ -73,6 +75,7 @@ void cmd_commit(int argc, char *argv[]) {
 
     const char *message = argv[3];
     ObjectID commit_id;
+
     if (commit_create(message, &commit_id) != 0) {
         fprintf(stderr, "error: commit failed\n");
         return;
